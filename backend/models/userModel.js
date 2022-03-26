@@ -41,6 +41,45 @@ const userSchema = mongoose.Schema({
       },
     },
   ],
+  wishlist: [
+    {
+      pgId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Post',
+      },
+      pgName: {
+        type: String,
+      },
+      pgAddress: {
+        type: String,
+      },
+      pgAmenities: {
+        laundry: {
+          type: Boolean,
+          default: false,
+        },
+        refrigerator: {
+          type: Boolean,
+          default: false,
+        },
+        tv: {
+          type: Boolean,
+          default: false,
+        },
+        wifi: {
+          type: Boolean,
+          default: false,
+        },
+        bed: {
+          type: Boolean,
+          default: false,
+        },
+      },
+      pgPhoto: {
+        type: String,
+      },
+    },
+  ],
 });
 
 userSchema.methods.matchPassword = async function (enteredPassword) {
