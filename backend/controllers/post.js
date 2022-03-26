@@ -70,12 +70,10 @@ const createPost = expressAsyncHandler(async (req, res) => {
         photo: post.media[0],
       });
     } else {
-      res.status(400);
-      throw new Error('Invalid post data');
+      res.status(400).send({ message: 'Invalid post data' });
     }
   } catch (error) {
-    res.status(400);
-    throw new Error(`Something went wrong : \n${error}`);
+    res.status(400).send({ message: `Something went wrong : \n${error}` });
   }
 });
 
@@ -96,7 +94,7 @@ const editPost = expressAsyncHandler(async (req, res) => {
     const userid = req.user._id;
     const post = await Post.findOne({
       id: postid,
-      "createdBy.userId": userid,
+      'createdBy.userId': userid,
     });
     if (post) {
       post.name = req.body.name || post.name;
@@ -139,8 +137,7 @@ const editPost = expressAsyncHandler(async (req, res) => {
       }
       post.media = req.body.media || post.media;
     } else {
-      res.status(400);
-      throw new Error('Post not found');
+      res.status(400).send({ message: 'Post not found' });
     }
     Post.findByIdAndUpdate(
       { _id: post._id },
@@ -148,8 +145,7 @@ const editPost = expressAsyncHandler(async (req, res) => {
       { new: true },
       (err, postRes) => {
         if (err) {
-          res.status(400);
-          throw new Error('Update unsuccessful!');
+          res.status(400).send({ message: 'Update unsuccessful!' });
         }
         res.json({
           name: postRes.name,
@@ -160,8 +156,7 @@ const editPost = expressAsyncHandler(async (req, res) => {
       }
     );
   } catch (error) {
-    res.status(400);
-    throw new Error(`Something went wrong : \n${error}`);
+    res.status(400).send({ message: `Something went wrong : \n${error}` });
   }
 });
 
@@ -176,27 +171,25 @@ const removePost = expressAsyncHandler(async (req, res) => {
   try {
     const postid = req.params.id;
     const userid = req.user._id;
-    const post = await Post.findOne({ id: postid, "createdBy.userId": userid });
+    const post = await Post.findOne({ id: postid, 'createdBy.userId': userid });
     if (post) {
       await Post.deleteOne({ _id: postid });
       User.findByIdAndUpdate(
         userid,
         { $pull: { posts: { postId: postid } } },
+        { new: true },
         (err, userRes) => {
           if (err) {
-            res.status(400);
-            throw new Error(`Deletion unsuccessful!`);
+            res.status(400).send(`Deletion unsuccessful!`);
           }
           res.json(userRes.posts);
         }
       );
     } else {
-      res.status(400);
-      throw new Error('Post not found');
+      res.status(404).send({ message: 'post not found' });
     }
   } catch (error) {
-    res.status(400);
-    throw new Error(`Something went wrong : \n${error}`);
+    res.status(400).send({ message: `Something went wrong` });
   }
 });
 
@@ -244,12 +237,10 @@ const viewPost = expressAsyncHandler(async (req, res) => {
         createdAt: post.createdAt,
       });
     } else {
-      res.status(400);
-      throw new Error('Post not found');
+      res.status(400).send({ message: 'Post not found' });
     }
   } catch (error) {
-    res.status(400);
-    throw new Error(`Something went wrong : \n${error}`);
+    res.status(400).send({ message: `Something went wrong : \n${error}` });
   }
 });
 
@@ -278,7 +269,7 @@ const viewPosts = expressAsyncHandler(async (req, res) => {
   try {
     const userid = req.user._id;
     const user = await User.findById(userid);
-    const posts = await Post.find({ "createdBy.userId": user._id });
+    const posts = await Post.find({ 'createdBy.userId': user._id });
     const postList = [];
     posts.forEach((post) => {
       postList.push({
@@ -290,8 +281,7 @@ const viewPosts = expressAsyncHandler(async (req, res) => {
     });
     res.json(postList);
   } catch (error) {
-    res.status(400);
-    throw new Error(`Something went wrong : \n${error}`);
+    res.status(400).send({ message: `Something went wrong : \n${error}` });
   }
 });
 

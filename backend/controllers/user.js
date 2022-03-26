@@ -21,8 +21,7 @@ const getMyProfile = async (req, res) => {
       isVerified: user.isVerified,
     });
   } else {
-    res.status(404);
-    throw new Error('User not found');
+    res.status(404).send({ message: 'User not found' });
   }
 };
 

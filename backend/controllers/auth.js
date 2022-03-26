@@ -25,12 +25,10 @@ const login = async (req, res) => {
         token: generateToken(user._id),
       });
     } else {
-      res.status(401);
-      throw new Error('Invalid email or password');
+      res.status(401).send({ message: 'Invalid email or password' });
     }
   } catch (error) {
-    res.status(400);
-    throw new Error(`Something went wrong ${error}`);
+    res.status(400).send({ message: `Something went wrong ${error}` });
   }
 };
 
@@ -48,8 +46,7 @@ const registerUser = async (req, res) => {
     $or: [{ email: email }, { name: name }],
   });
   if (userExists) {
-    res.status(400);
-    throw new Error('name or Email already exists');
+    res.status(400).send({ message: 'name or Email already exists' });
   }
 
   const user = await User.create({
@@ -70,8 +67,7 @@ const registerUser = async (req, res) => {
       token: generateToken(user._id),
     });
   } else {
-    res.status(400);
-    throw new Error('Invalid user data');
+    res.status(400).send({ message: 'Invalid user data' });
   }
 };
 
