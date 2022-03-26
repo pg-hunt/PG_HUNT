@@ -1,24 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import NavBarComponent from "./components/NavBarComponent";
+import PageNotFound from "./screens/PageNotFound";
+import HomeScreen from "./screens/HomeScreen";
+import LoginScreen from "./screens/LoginScreen";
+import RegisterScreen from "./screens/RegisterScreen";
+import FavoritesScreen from "./screens/FavoritesScreen";
+import RequireAuth from "./utils/RequireAuth";
+import MyProfileScreen from "./screens/MyProfileScreen";
+import RequireHost from "./utils/RequireHost";
+import CreatePostScreen from "./screens/CreatePostScreen";
+import MyPostsScreen from "./screens/MyPostsScreen";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <BrowserRouter>
+        <NavBarComponent />
+        <Routes>
+          <Route path="/" element={<HomeScreen />} />
+          <Route path="/login" element={<LoginScreen />} />
+          <Route path="/register" element={<RegisterScreen />} />
+          <Route element={<RequireAuth />}>
+            <Route path="/favorites" element={<FavoritesScreen />} />
+            <Route path="/profile" element={<MyProfileScreen />} />
+            <Route element={<RequireHost />}>
+              <Route path="/create" element={<CreatePostScreen />} />
+              <Route path="/myPosts" element={<MyPostsScreen />} />
+            </Route>
+          </Route>
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 
