@@ -10,6 +10,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { useNavigate } from "react-router-dom";
+import DrawerComponent from "./DrawerComponent";
 
 export default function ButtonAppBar() {
   const navigate = useNavigate();
@@ -34,9 +35,24 @@ export default function ButtonAppBar() {
     setAuth(true);
   };
 
+  const [open, setOpen] = useState(false);
+
+  const toggleDrawer = (openState) => (event) => {
+    if (
+      event &&
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setOpen(openState);
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <DrawerComponent open={open} toggleDrawer={toggleDrawer} />
+      <AppBar position="static" color="transparent">
         <Toolbar>
           <IconButton
             size="large"
@@ -44,17 +60,21 @@ export default function ButtonAppBar() {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
+            onClick={() => {
+              setOpen(true);
+            }}
           >
             <MenuIcon />
           </IconButton>
           <Typography
             variant="h6"
             component="div"
-            sx={{ flexGrow: 1, cursor: "pointer" }}
+            sx={{ cursor: "pointer" }}
             onClick={() => navigate("/")}
           >
             PG-HUNT
           </Typography>
+          <Box sx={{ flexGrow: 1 }} />
           {auth ? (
             <div>
               <IconButton
@@ -63,7 +83,7 @@ export default function ButtonAppBar() {
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 onClick={handleMenu}
-                color="inherit"
+                color="primary"
               >
                 <AccountCircle />
               </IconButton>

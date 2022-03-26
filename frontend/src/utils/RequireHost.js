@@ -2,12 +2,12 @@ import React from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 // import { useStoreState } from "easy-peasy";
 
-function RequireAuth() {
-  //   const isLoggedIn = useStoreState((state) => state.auth.isLoggedIn);
-  const isLoggedIn = true;
+function RequireHost() {
+  //   const isHost = useStoreState((state) => state.auth.isHost);
+  const isHost = true;
   let location = useLocation();
 
-  if (!isLoggedIn) {
+  if (!isHost) {
     // Redirect them to the /login page, but save the current location they were
     // trying to go to when they were redirected. This allows us to send them
     // along to that page after they login, which is a nicer user experience
@@ -18,4 +18,4 @@ function RequireAuth() {
   return <Outlet />;
 }
 
-export default RequireAuth;
+export default RequireHost;
