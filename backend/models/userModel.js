@@ -30,6 +30,17 @@ const userSchema = mongoose.Schema({
     required: true,
     default: false,
   },
+  posts: [
+    {
+      postId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Post',
+      },
+      postName: {
+        type: String,
+      },
+    },
+  ],
 });
 
 userSchema.methods.matchPassword = async function (enteredPassword) {
