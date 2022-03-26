@@ -2,9 +2,14 @@
 import User from '../models/userModel.js';
 import generateToken from '../utils/generateToken.js';
 
-// @desc    Auth user & get token
-// @route   POST /api/users/login
-// @access  Public
+/**
+ * @description login route
+ * @access Public
+ * @route POST api/users/login
+ * @param  {email,password}
+ * @returns {_id,phone,email,name,isAdmin,isVerified,token}
+ * @
+ */
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -16,6 +21,7 @@ const login = async (req, res) => {
         email: user.email,
         name: user.name,
         isAdmin: user.isAdmin,
+        isVerified: user.isVerified,
         token: generateToken(user._id),
       });
     } else {
@@ -28,9 +34,14 @@ const login = async (req, res) => {
   }
 };
 
-// @desc    Regsiter new user
-// @route   POST /api/users
-// @access  Public
+/**
+ * @description egsiter new user
+ * @access Public
+ * @route POST api/users/register
+ * @param  {email,name,password,phone}
+ * @returns {_id,phone,email,name,isAdmin,isVerified,token}
+ * @
+ */
 const registerUser = async (req, res) => {
   const { email, name, password, phone } = req.body;
   const userExists = await User.findOne({
@@ -55,6 +66,7 @@ const registerUser = async (req, res) => {
       email: user.email,
       name: user.name,
       isAdmin: user.isAdmin,
+      isVerified: user.isVerified,
       token: generateToken(user._id),
     });
   } else {
