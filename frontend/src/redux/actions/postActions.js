@@ -123,14 +123,11 @@ export const deletePost = (id) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.delete(`/api/posts/${id}`, config);
-
-    dispatch({
-      type: VIEW_ALL_POSTS_SUCCESS,
-      payload: data,
-    });
     dispatch({
       type: DELETE_POST_SUCCESS,
     });
+
+    dispatch(viewAllPosts());
 
     toast.success(`Post Deleted successfully!`);
   } catch (error) {

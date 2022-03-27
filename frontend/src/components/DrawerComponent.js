@@ -71,14 +71,14 @@ export default function DrawerComponent({ open, toggleDrawer }) {
           </List>
           <Box
             role="presentation"
-            sx={{
-              marginTop: 'auto',
-              position: 'absolute',
-              bottom: 0,
-              right: 0,
-              left: 0,
-              zIndex: 2,
-            }}
+            // sx={{
+            //   marginTop: 'auto',
+            //   position: 'absolute',
+            //   bottom: 0,
+            //   right: 0,
+            //   left: 0,
+            //   zIndex: 2,
+            // }}
             keepMounted
           >
             <Divider />
