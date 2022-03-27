@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -6,15 +6,18 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import AddIcon from '@mui/icons-material/Add';
 // import { createTeamAction } from "./../actions/teamActions";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import MapsHomeWorkIcon from '@mui/icons-material/MapsHomeWork';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import { createPost } from './../redux/actions/postActions';
+import { editPost, viewPost } from '../redux/actions/postActions';
+import { useParams } from 'react-router-dom';
 
-function CreatePostScreen() {
+function EditPostScreen() {
   const dispatch = useDispatch();
+  let params = useParams();
+  const { current_post } = useSelector((state) => state.posts?.viewPost);
 
   const [name, setName] = useState('');
   const [location, setLocation] = useState(''); //lat:"",long:""
@@ -38,6 +41,37 @@ function CreatePostScreen() {
   });
   const [contact, setContact] = useState('');
   const [media, setMedia] = useState('');
+
+  useEffect(() => {
+    dispatch(viewPost(params.id));
+  }, []);
+
+  useEffect(() => {
+    if (current_post) {
+      setName(current_post.name);
+      setLocation(
+        `${current_post.location?.lat},${current_post.location?.long}`
+      );
+      setDescription(current_post.description);
+      setAddress(current_post.address);
+      let tempTypes = '';
+      current_post.types.forEach((type) => {
+        tempTypes += type.share + ':' + type.price + ',';
+      });
+      tempTypes = tempTypes.slice(0, tempTypes.length - 1);
+      setTypes(tempTypes);
+      setGender(current_post.gender);
+      setWeekdays(current_post.meal?.weekdays?.join(','));
+      setWeekends(current_post.meal?.weekends?.join(','));
+      setOptions(current_post.meal?.options);
+      setMaintenance(current_post.maintenance);
+      setGateOpen(current_post.gateOpen);
+      setGateClose(current_post.gateClose);
+      setAmenities(current_post.amenities);
+      setContact(current_post.contact?.join(','));
+      setMedia(current_post.media?.join(','));
+    }
+  }, [current_post]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -67,7 +101,7 @@ function CreatePostScreen() {
       contact: contact.split(',').map((c) => c.trim()),
       media: media.split(',').map((m) => m.trim()),
     };
-    dispatch(createPost(postFormat));
+    dispatch(editPost(params.id, postFormat));
   };
   return (
     <Box
@@ -82,7 +116,7 @@ function CreatePostScreen() {
         <MapsHomeWorkIcon fontSize="large" />
       </Avatar>
       <Typography component="h1" variant="h5">
-        Create a PG Post
+        Edit a PG Post
       </Typography>
       <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
         <TextField
@@ -323,11 +357,11 @@ function CreatePostScreen() {
           sx={{ mt: 3, mb: 2 }}
           startIcon={<AddIcon />}
         >
-          Create a PG Post
+          Edit a PG Post
         </Button>
       </Box>
     </Box>
   );
 }
 
-export default CreatePostScreen;
+export default EditPostScreen;
