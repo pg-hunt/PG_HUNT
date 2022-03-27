@@ -249,20 +249,8 @@ const viewPost = expressAsyncHandler(async (req, res) => {
  * @route  GET /api/posts/
  * @param  {}
  * @returns [{name: String,
-        location: Object,
-        description: String,
         address: String,
-        types: [Object],
-        gender: String,
-        meal: {weekdays*: [Breakfast|Lunch|Dinner], weekends*: [Breakfast|Lunch|Dinner], options*: 'Veg-Only'|'Non-Veg'},
-        maintenance: Number,
-        gateOpen: String,
-        gateClose: String,
-        amenities: Object(Boolean - laundry, refrigerator, tv, wifi, bed),
-        media: [String]+,
-        contact: [Number]+,
-        createdBy: {userId: ObjectId, userName: String},
-        createdAt: Timestamp,}]
+        photo: String,}]
  * @access Verified
  */
 const viewPosts = expressAsyncHandler(async (req, res) => {
@@ -285,4 +273,37 @@ const viewPosts = expressAsyncHandler(async (req, res) => {
   }
 });
 
-export { createPost, editPost, removePost, viewPost, viewPosts };
+/**
+ * @description View all posts of PGs within 500km from a given location
+ * @route  POST /api/posts/search
+ * @param  {{location: String, searchText: String,}}
+ * @returns [{name: String,
+        address: String,
+        photo: String,}]
+ * @access Verified
+ */
+const searchPosts = expressAsyncHandler(async (req, res) => {
+  try {
+    const postList = [];
+    const searchText = req.body.searchText;
+    const posts = await Post.find({
+      $or: [
+        { address: { $regex: new RegExp(searchText, 'i') } },
+        { name: { $regex: new RegExp(searchText, 'i') } },
+      ],
+    });
+    posts.forEach((post) => {
+      postList.push({
+        postid: post.id,
+        name: post.name,
+        address: post.address,
+        photo: post.media[0],
+      });
+    });
+    res.json(postList);
+  } catch (error) {
+    res.status(400).send({ message: `Something went wrong : \n${error}` });
+  }
+});
+
+export { createPost, editPost, removePost, viewPost, viewPosts, searchPosts };
