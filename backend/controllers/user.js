@@ -26,6 +26,13 @@ const getMyProfile = async (req, res) => {
   }
 };
 
+/**
+ * @description Adds a post of PG to user's wishlist
+ * @route  POST /api/users/addtowishlist/:id
+ * @param {}
+ * @returns [{pgId: ObjectId, pgName: String, pgAddress: String, pgAmenities: Object(Boolean - laundry, refrigerator, tv, wifi, bed), pgPhoto: String}]
+ * @access Private
+ */
 const addToWishlist = async (req, res) => {
   try {
     const postid = req.params.id;
@@ -72,6 +79,13 @@ const addToWishlist = async (req, res) => {
   }
 };
 
+/**
+ * @description Removes a post of PG from user's wishlist
+ * @route  DELETE /api/users/removefromwishlist/:id
+ * @param {}
+ * @returns [{pgId: ObjectId, pgName: String, pgAddress: String, pgAmenities: Object(Boolean - laundry, refrigerator, tv, wifi, bed), pgPhoto: String}]
+ * @access Private
+ */
 const removeFromWishlist = async (req, res) => {
   try {
     const postid = req.params.id;
@@ -100,6 +114,13 @@ const removeFromWishlist = async (req, res) => {
   }
 };
 
+/**
+ * @description Shows posts of PG in user's wishlist
+ * @route  GET /api/users/getmywishlist
+ * @param {}
+ * @returns [{pgId: ObjectId, pgName: String, pgAddress: String, pgAmenities: Object(Boolean - laundry, refrigerator, tv, wifi, bed), pgPhoto: String}]
+ * @access Private
+ */
 const viewWishlist = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
