@@ -1,20 +1,27 @@
-import React, { useState } from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import AccountCircle from "@mui/icons-material/AccountCircle";
-import MenuItem from "@mui/material/MenuItem";
-import Menu from "@mui/material/Menu";
-import { useNavigate } from "react-router-dom";
-import DrawerComponent from "./DrawerComponent";
+import React, { useState, useEffect } from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+import { useNavigate } from 'react-router-dom';
+import DrawerComponent from './DrawerComponent';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../redux/actions/userActions';
 
 export default function ButtonAppBar() {
-  const navigate = useNavigate();
-  const [auth, setAuth] = React.useState(true);
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+  const dispatch = useDispatch();
+
+  const navigator = useNavigate();
+
+  const [auth, setAuth] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleMenu = (event) => {
@@ -27,21 +34,26 @@ export default function ButtonAppBar() {
 
   const handleLogout = () => {
     setAnchorEl(null);
-    setAuth(false);
+    dispatch(logout());
   };
 
   const handleLogin = () => {
     setAnchorEl(null);
-    setAuth(true);
+    navigator('/login');
   };
+
+  useEffect(() => {
+    if (userInfo) setAuth(true);
+    else setAuth(false);
+  }, [userInfo, dispatch]);
 
   const [open, setOpen] = useState(false);
 
   const toggleDrawer = (openState) => (event) => {
     if (
       event &&
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
     ) {
       return;
     }
@@ -69,8 +81,8 @@ export default function ButtonAppBar() {
           <Typography
             variant="h6"
             component="div"
-            sx={{ cursor: "pointer" }}
-            onClick={() => navigate("/")}
+            sx={{ cursor: 'pointer' }}
+            onClick={() => navigator('/')}
           >
             PG-HUNT
           </Typography>
@@ -91,13 +103,13 @@ export default function ButtonAppBar() {
                 id="menu-appbar"
                 anchorEl={anchorEl}
                 anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
+                  vertical: 'top',
+                  horizontal: 'right',
                 }}
                 keepMounted
                 transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
+                  vertical: 'top',
+                  horizontal: 'right',
                 }}
                 open={Boolean(anchorEl)}
                 onClose={handleClose}

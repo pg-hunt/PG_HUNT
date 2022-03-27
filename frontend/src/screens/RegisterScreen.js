@@ -1,21 +1,20 @@
-import React, { useEffect, useState } from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import { register } from "./../redux/actions/userActions";
-import { useDispatch, useSelector } from "react-redux";
-// import Message from "../components/Message";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import InputAdornment from "@mui/material/InputAdornment";
-import IconButton from "@mui/material/IconButton";
-import { useNavigate, useLocation } from "react-router-dom";
-import Loader from "./../utils/Loader";
+import React, { useEffect, useState } from 'react';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Link from '@mui/material/Link';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import { register } from './../redux/actions/userActions';
+import { useDispatch, useSelector } from 'react-redux';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
+import { useNavigate, useLocation } from 'react-router-dom';
+import Loader from './../utils/Loader';
 
 function Copyright(props) {
   return (
@@ -25,15 +24,15 @@ function Copyright(props) {
       align="center"
       {...props}
     >
-      {"Copyright © "}
+      {'Copyright © '}
       <Link
         color="inherit"
         href="" // TODO: Change to correct domain later PG-HUNT
       >
         PG-HUNT
-      </Link>{" "}
+      </Link>{' '}
       {new Date().getFullYear()}
-      {"."}
+      {'.'}
     </Typography>
   );
 }
@@ -48,11 +47,11 @@ export default function RegisterScreen() {
   const userRegister = useSelector((state) => state.userRegister);
   const { loading, error, userInfo } = userRegister;
 
-  const redirect = location.search ? location.search.split("=")[1] : "/";
+  const redirect = location.search ? location.search.split('=')[1] : '/';
 
   useEffect(() => {
     if (userInfo) {
-      history.push(redirect);
+      history(redirect);
     }
   }, [history, userInfo, redirect]);
 
@@ -61,10 +60,10 @@ export default function RegisterScreen() {
     const data = new FormData(event.currentTarget);
     dispatch(
       register(
-        data.get("name"),
-        data.get("phoneNumber"),
-        data.get("email"),
-        data.get("password")
+        data.get('name'),
+        data.get('phoneNumber'),
+        data.get('email'),
+        data.get('password')
       )
     );
   };
@@ -81,12 +80,12 @@ export default function RegisterScreen() {
         sx={{
           my: 8,
           mx: 4,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main", width: 56, height: 56 }}>
+        <Avatar sx={{ m: 1, bgcolor: 'secondary.main', width: 56, height: 56 }}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
@@ -129,7 +128,7 @@ export default function RegisterScreen() {
             required
             fullWidth
             name="password"
-            type={showPassword ? "text" : "password"}
+            type={showPassword ? 'text' : 'password'}
             id="password"
             autoComplete="current-password"
             InputProps={{
@@ -160,7 +159,7 @@ export default function RegisterScreen() {
             <Grid item xs></Grid>
             <Grid item>
               <Link href="/login" variant="body2">
-                {"Already have an account? Login"}
+                {'Already have an account? Login'}
               </Link>
             </Grid>
           </Grid>
