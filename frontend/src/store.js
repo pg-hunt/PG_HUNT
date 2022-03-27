@@ -11,6 +11,7 @@ import {
   deletePostReducer,
   viewPostReducer,
   viewAllPostsReducer,
+  searchReducer,
 } from './redux/reducers/postReducer';
 
 const reducer = combineReducers({
@@ -22,6 +23,7 @@ const reducer = combineReducers({
     deletePost: deletePostReducer,
     viewPost: viewPostReducer,
     viewAllPosts: viewAllPostsReducer,
+    search: searchReducer,
   }),
 });
 

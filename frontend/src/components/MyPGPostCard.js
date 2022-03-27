@@ -10,7 +10,13 @@ import { useDispatch } from 'react-redux';
 import { deletePost } from './../redux/actions/postActions';
 import Box from '@mui/material/Box';
 
-export default function MyPGPostCard({ postid, name, address, photo }) {
+export default function MyPGPostCard({
+  postid,
+  name,
+  address,
+  photo,
+  isSearch,
+}) {
   const navigator = useNavigate();
   const dispatch = useDispatch();
   const handleDelete = () => {
@@ -38,14 +44,16 @@ export default function MyPGPostCard({ postid, name, address, photo }) {
         </Typography>
       </CardContent>
       <Box sx={{ marginTop: 'auto' }} />
-      <CardActions>
-        <Button size="small" onClick={() => navigator(`/edit/${postid}`)}>
-          Edit
-        </Button>
-        <Button size="small" onClick={handleDelete}>
-          Delete
-        </Button>
-      </CardActions>
+      {!isSearch && (
+        <CardActions>
+          <Button size="small" onClick={() => navigator(`/edit/${postid}`)}>
+            Edit
+          </Button>
+          <Button size="small" onClick={handleDelete}>
+            Delete
+          </Button>
+        </CardActions>
+      )}
     </Card>
   );
 }

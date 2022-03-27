@@ -12,6 +12,7 @@ import CreatePostScreen from './screens/CreatePostScreen';
 import EditPostScreen from './screens/EditPostScreen';
 import MyPostsScreen from './screens/MyPostsScreen';
 import ViewPostByIdScreen from './screens/ViewPostByIdScreen';
+import PGListScreen from './screens/PGListScreen';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route element={<RequireAuth />}>
             <Route path="/favorites" element={<FavoritesScreen />} />
             <Route path="/profile" element={<MyProfileScreen />} />
+            <Route path="/pgs" element={<PGListScreen />} />
             <Route element={<RequireHost />}>
               <Route path="/create" element={<CreatePostScreen />} />
               <Route path="/myPosts" element={<MyPostsScreen />} />

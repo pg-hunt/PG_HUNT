@@ -1,19 +1,24 @@
-import React, { useState } from "react";
-import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Grid";
-import TextField from "@mui/material/TextField";
-import InputAdornment from "@mui/material/InputAdornment";
-import IconButton from "@mui/material/IconButton";
-import SearchIcon from "@mui/icons-material/Search";
-import Button from "@mui/material/Button";
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
+import SearchIcon from '@mui/icons-material/Search';
+import Button from '@mui/material/Button';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { searchAction } from '../redux/actions/postActions';
 
-function SearchComponent() {
+function SearchComponent({ isHome }) {
+  const dispatch = useDispatch();
   const history = useNavigate();
-  const [location, setLocation] = useState("");
+  const [data, setData] = useState('');
   const handleSearch = (e) => {
-    history.push("/pgs/" + location);
+    dispatch(searchAction({ searchText: data }));
+    console.log({ searchText: data });
+    if (isHome) history('/pgs/');
   };
   const handleSearchByKeyDown = (e) => {
     if (e.keyCode === 13) handleSearch();
@@ -39,8 +44,8 @@ function SearchComponent() {
             variant="outlined"
             fullWidth
             size="small"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
+            value={data}
+            onChange={(e) => setData(e.target.value)}
             onKeyDown={handleSearchByKeyDown}
             InputProps={{
               endAdornment: (

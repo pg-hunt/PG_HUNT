@@ -15,6 +15,9 @@ import {
   VIEW_ALL_POSTS_REQUEST,
   VIEW_ALL_POSTS_SUCCESS,
   VIEW_ALL_POSTS_FAIL,
+  SEARCH_REQUEST,
+  SEARCH_SUCCESS,
+  SEARCH_FAIL,
 } from '../constants/postConstants';
 import { toast } from 'react-toastify';
 
@@ -210,6 +213,42 @@ export const viewAllPosts = () => async (dispatch, getState) => {
     toast.error(`Error: ${err}`);
     dispatch({
       type: VIEW_ALL_POSTS_FAIL,
+      payload: err,
+    });
+  }
+};
+
+export const searchAction = (search) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: SEARCH_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.post(`/api/posts/search`, search, config);
+
+    dispatch({
+      type: SEARCH_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    const err =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    toast.error(`Error: ${err}`);
+    dispatch({
+      type: SEARCH_FAIL,
       payload: err,
     });
   }

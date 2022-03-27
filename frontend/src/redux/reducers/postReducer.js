@@ -14,6 +14,9 @@ import {
   VIEW_ALL_POSTS_REQUEST,
   VIEW_ALL_POSTS_SUCCESS,
   VIEW_ALL_POSTS_FAIL,
+  SEARCH_REQUEST,
+  SEARCH_SUCCESS,
+  SEARCH_FAIL,
 } from '../constants/postConstants';
 
 export const createPostReducer = (state = {}, action) => {
@@ -75,6 +78,19 @@ export const viewAllPostsReducer = (state = {}, action) => {
     case VIEW_ALL_POSTS_SUCCESS:
       return { loading: false, all_posts: action.payload };
     case VIEW_ALL_POSTS_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const searchReducer = (state = { all_posts: [] }, action) => {
+  switch (action.type) {
+    case SEARCH_REQUEST:
+      return { loading: true };
+    case SEARCH_SUCCESS:
+      return { loading: false, all_posts: action.payload };
+    case SEARCH_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;
