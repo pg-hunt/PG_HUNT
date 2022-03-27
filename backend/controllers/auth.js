@@ -43,10 +43,10 @@ const login = async (req, res) => {
 const registerUser = async (req, res) => {
   const { email, name, password, phone } = req.body;
   const userExists = await User.findOne({
-    $or: [{ email: email }, { name: name }],
+    $or: [{ email: email }, { phone: phone }],
   });
   if (userExists) {
-    res.status(400).send({ message: 'name or Email already exists' });
+    res.status(400).send({ message: 'Mobile number or Email already exists' });
   }
 
   const user = await User.create({
