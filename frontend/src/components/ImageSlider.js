@@ -6,7 +6,7 @@ const ImageSlider = ({ images }) => {
   return (
     <AwesomeSlider>
       {images.map((image) => (
-        <div data-src={image} />
+        <div key={image} data-src={image} />
       ))}
     </AwesomeSlider>
   );

@@ -13,7 +13,11 @@ import KitchenIcon from '@mui/icons-material/Kitchen';
 import TvIcon from '@mui/icons-material/Tv';
 import NetworkWifiIcon from '@mui/icons-material/NetworkWifi';
 import KingBedIcon from '@mui/icons-material/KingBed';
-// import GoogleMapComponent from '../components/GoogleMapComponent';
+import GoogleMapComponent from '../components/GoogleMapComponent';
+import Button from '@mui/material/Button';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import CallIcon from '@mui/icons-material/Call';
+import ButtonGroup from '@mui/material/ButtonGroup';
 
 const ViewPostByIdScreen = () => {
   const dispatch = useDispatch();
@@ -42,6 +46,24 @@ const ViewPostByIdScreen = () => {
             <Typography variant="body1" gutterBottom>
               <b>Address: </b> {current_post.address}
             </Typography>
+            <ButtonGroup
+              disableElevation
+              variant="contained"
+              fullWidth
+              sx={{ my: 1 }}
+            >
+              <Button endIcon={<StarBorderIcon />} color="info">
+                Add to Favourites
+              </Button>
+
+              <Button
+                endIcon={<CallIcon />}
+                color="success"
+                href={`tel:${current_post.contact[0]}`}
+              >
+                Contact Us
+              </Button>
+            </ButtonGroup>
             <Typography variant="body1" gutterBottom>
               <b>Allowed Gender: </b> {current_post.gender}
             </Typography>
@@ -65,7 +87,11 @@ const ViewPostByIdScreen = () => {
             <Typography variant="body1" gutterBottom>
               <b>Gate Close Timings</b> : {current_post.gateClose}
             </Typography>
-            <Stack sx={{ mt: 2 }}>
+            <Stack
+              sx={{ mt: 2 }}
+              direction={{ xs: 'column', md: 'row' }}
+              spacing={2}
+            >
               {current_post.types?.map((type) => (
                 <>
                   <Typography variant="h4" gutterBottom key={type}>
@@ -80,6 +106,11 @@ const ViewPostByIdScreen = () => {
           </Box>
         </Grid>
       </Grid>
+      <GoogleMapComponent
+        lat={current_post.location?.lat}
+        lng={current_post.location?.long}
+        text={current_post.name}
+      />
       <Box sx={{ p: 4, backgroundColor: '#2f2f2f', color: 'white' }}>
         <Typography variant="h5" gutterBottom sx={{ mt: 2 }}>
           Amenities Available:
@@ -90,7 +121,7 @@ const ViewPostByIdScreen = () => {
               <LocalLaundryServiceIcon sx={{ fontSize: '2rem' }} />
             </Grid>
           )}
-          {current_post.amenities?.refrigirator && (
+          {current_post.amenities?.refrigerator && (
             <Grid item xs={3} md={2}>
               <KitchenIcon sx={{ fontSize: '2rem' }} />
             </Grid>
@@ -112,23 +143,6 @@ const ViewPostByIdScreen = () => {
           )}
         </Grid>
       </Box>
-      <Grid container spacing={4}>
-        <Grid item xs={12} md={6}>
-          {/* <GoogleMapComponent
-            lat={current_post.location?.lat}
-            lng={current_post.location?.long}
-            text={current_post.name}
-          /> */}
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Typography variant="h5" gutterBottom sx={{ mt: 2 }}>
-            Contact Numbers:
-          </Typography>
-          <Typography variant="body1" gutterBottom sx={{ mt: 2 }}>
-            {current_post.contact?.map((number) => number + ', ')}
-          </Typography>
-        </Grid>
-      </Grid>
     </Box>
   );
 };

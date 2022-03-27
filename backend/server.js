@@ -1,10 +1,10 @@
-import express from "express";
-import { config } from "dotenv";
-import connectDB from "./config/db.js";
-import postRoutes from "./routes/postRoutes.js";
-import userRoutes from "./routes/userRoutes.js";
-import path from "path";
-import morgan from "morgan";
+import express from 'express';
+import { config } from 'dotenv';
+import connectDB from './config/db.js';
+import postRoutes from './routes/postRoutes.js';
+import userRoutes from './routes/userRoutes.js';
+import path from 'path';
+import morgan from 'morgan';
 
 config();
 connectDB();
@@ -12,8 +12,12 @@ connectDB();
 const app = express();
 app.use(express.json());
 
-app.use("/api/posts", postRoutes);
-app.use("/api/users", userRoutes);
+app.use('/api/posts', postRoutes);
+app.use('/api/users', userRoutes);
+
+app.get('/api/config/google-maps-api-key', (req, res) =>
+  res.send(process.env.GOOGLE_MAP_API_KEY)
+);
 
 const __dirname = path.resolve();
 
