@@ -13,7 +13,7 @@ import KitchenIcon from '@mui/icons-material/Kitchen';
 import TvIcon from '@mui/icons-material/Tv';
 import NetworkWifiIcon from '@mui/icons-material/NetworkWifi';
 import KingBedIcon from '@mui/icons-material/KingBed';
-import GoogleMapComponent from '../components/GoogleMapComponent';
+// import GoogleMapComponent from '../components/GoogleMapComponent';
 
 const ViewPostByIdScreen = () => {
   const dispatch = useDispatch();
@@ -90,7 +90,7 @@ const ViewPostByIdScreen = () => {
               <LocalLaundryServiceIcon sx={{ fontSize: '2rem' }} />
             </Grid>
           )}
-          {current_post.amenities?.kitchen && (
+          {current_post.amenities?.refrigirator && (
             <Grid item xs={3} md={2}>
               <KitchenIcon sx={{ fontSize: '2rem' }} />
             </Grid>
@@ -114,11 +114,11 @@ const ViewPostByIdScreen = () => {
       </Box>
       <Grid container spacing={4}>
         <Grid item xs={12} md={6}>
-          <GoogleMapComponent
+          {/* <GoogleMapComponent
             lat={current_post.location?.lat}
             lng={current_post.location?.long}
             text={current_post.name}
-          />
+          /> */}
         </Grid>
         <Grid item xs={12} md={6}>
           <Typography variant="h5" gutterBottom sx={{ mt: 2 }}>

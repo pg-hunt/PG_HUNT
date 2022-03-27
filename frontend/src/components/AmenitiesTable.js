@@ -1,16 +1,12 @@
-import * as React from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import LocalLaundryServiceIcon from "@mui/icons-material/LocalLaundryService";
-import KitchenIcon from "@mui/icons-material/Kitchen";
-import TvIcon from "@mui/icons-material/Tv";
-import NetworkWifiIcon from "@mui/icons-material/NetworkWifi";
-import KingBedIcon from "@mui/icons-material/KingBed";
+import * as React from 'react';
+import LocalLaundryServiceIcon from '@mui/icons-material/LocalLaundryService';
+import KitchenIcon from '@mui/icons-material/Kitchen';
+import TvIcon from '@mui/icons-material/Tv';
+import NetworkWifiIcon from '@mui/icons-material/NetworkWifi';
+import KingBedIcon from '@mui/icons-material/KingBed';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 export default function AmenitiesTable({
   laundry,
@@ -20,48 +16,37 @@ export default function AmenitiesTable({
   bed,
 }) {
   return (
-    <TableContainer component={Paper}>
-      <Table size="small" aria-label="a dense table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Amenity</TableCell>
-            <TableCell align="right">Details</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-            <TableCell component="th" scope="row">
-              <LocalLaundryServiceIcon sx={{ verticalAlign: "text-bottom" }} />{" "}
-              Laundry
-            </TableCell>
-            <TableCell align="right">{laundry}</TableCell>
-          </TableRow>
-          <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-            <TableCell component="th" scope="row">
-              <KitchenIcon sx={{ verticalAlign: "text-bottom" }} /> Refrigirator
-            </TableCell>
-            <TableCell align="right">{refrigirator}</TableCell>
-          </TableRow>
-          <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-            <TableCell component="th" scope="row">
-              <TvIcon sx={{ verticalAlign: "text-bottom" }} /> Tv
-            </TableCell>
-            <TableCell align="right">{tv}</TableCell>
-          </TableRow>
-          <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-            <TableCell component="th" scope="row">
-              <NetworkWifiIcon sx={{ verticalAlign: "text-bottom" }} /> Wifi
-            </TableCell>
-            <TableCell align="right">{wifi}</TableCell>
-          </TableRow>
-          <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-            <TableCell component="th" scope="row">
-              <KingBedIcon sx={{ verticalAlign: "text-bottom" }} /> Bed
-            </TableCell>
-            <TableCell align="right">{bed}</TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <Box sx={{ p: 4, backgroundColor: '#2f2f2f', color: 'white' }}>
+      <Typography variant="h5" gutterBottom sx={{ mt: 2 }}>
+        Amenities Available:
+      </Typography>
+      <Grid container spacing={4} sx={{ my: 2 }}>
+        {laundry && (
+          <Grid item xs={4} md={3}>
+            <LocalLaundryServiceIcon sx={{ fontSize: '2rem' }} />
+          </Grid>
+        )}
+        {refrigirator && (
+          <Grid item xs={4} md={3}>
+            <KitchenIcon sx={{ fontSize: '2rem' }} />
+          </Grid>
+        )}
+        {tv && (
+          <Grid item xs={4} md={3}>
+            <TvIcon sx={{ fontSize: '2rem' }} />
+          </Grid>
+        )}
+        {wifi && (
+          <Grid item xs={4} md={3}>
+            <NetworkWifiIcon sx={{ fontSize: '2rem' }} />
+          </Grid>
+        )}
+        {bed && (
+          <Grid item xs={4} md={3}>
+            <KingBedIcon sx={{ fontSize: '3rem' }} />
+          </Grid>
+        )}
+      </Grid>
+    </Box>
   );
 }
