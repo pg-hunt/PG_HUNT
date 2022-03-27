@@ -1,21 +1,20 @@
-import React, { useEffect, useState } from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import { login } from "./../redux/actions/userActions";
-import { useDispatch, useSelector } from "react-redux";
-// import Message from "../components/Message";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import InputAdornment from "@mui/material/InputAdornment";
-import IconButton from "@mui/material/IconButton";
-import { useNavigate, useLocation } from "react-router-dom";
-import Loader from "./../utils/Loader";
+import React, { useEffect, useState } from 'react';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Link from '@mui/material/Link';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import { login } from './../redux/actions/userActions';
+import { useDispatch, useSelector } from 'react-redux';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
+import { useNavigate, useLocation } from 'react-router-dom';
+import Loader from './../utils/Loader';
 
 function Copyright(props) {
   return (
@@ -25,21 +24,21 @@ function Copyright(props) {
       align="center"
       {...props}
     >
-      {"Copyright © "}
+      {'Copyright © '}
       <Link
         color="inherit"
         href="" // TODO: Change to correct domain later PG-HUNT
       >
         PG_HUNT
-      </Link>{" "}
+      </Link>{' '}
       {new Date().getFullYear()}
-      {"."}
+      {'.'}
     </Typography>
   );
 }
 
 export default function LoginScreen() {
-  const history = useNavigate();
+  const navigator = useNavigate();
   const location = useLocation();
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
@@ -47,18 +46,18 @@ export default function LoginScreen() {
   const userLogin = useSelector((state) => state.userLogin);
   const { loading, error, userInfo } = userLogin;
 
-  const redirect = location.search ? location.search.split("=")[1] : "/";
+  const redirect = location.search ? location.search.split('=')[1] : '/';
 
   useEffect(() => {
     if (userInfo) {
-      history.push(redirect);
+      navigator(redirect);
     }
-  }, [history, userInfo, redirect]);
+  }, [navigator, userInfo, redirect]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    dispatch(login(data.get("email"), data.get("password")));
+    dispatch(login(data.get('email'), data.get('password')));
   };
 
   const handleClickShowPassword = () => {
@@ -70,7 +69,7 @@ export default function LoginScreen() {
 
   const testLogin = (event) => {
     event.preventDefault();
-    dispatch(login("tester1@test.com", "test"));
+    dispatch(login('tester1@test.com', '123456'));
   };
 
   return (
@@ -80,12 +79,12 @@ export default function LoginScreen() {
         sx={{
           my: 8,
           mx: 4,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main", width: 56, height: 56 }}>
+        <Avatar sx={{ m: 1, bgcolor: 'secondary.main', width: 56, height: 56 }}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
@@ -112,7 +111,7 @@ export default function LoginScreen() {
             label="Password"
             id="password"
             autoComplete="current-password"
-            type={showPassword ? "text" : "password"}
+            type={showPassword ? 'text' : 'password'}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -139,7 +138,7 @@ export default function LoginScreen() {
           <Grid container>
             <Grid item xs>
               <Link
-                sx={{ cursor: "pointer" }}
+                sx={{ cursor: 'pointer' }}
                 onClick={testLogin}
                 variant="body2"
               >
