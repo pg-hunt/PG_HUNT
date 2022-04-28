@@ -4,7 +4,7 @@
 
 # PG Hunt
 
-Whether you are a college student or a young professional, searching for an affordable home can be challenging. It’s easy to get lost in the busy rental market, and difficult to communicate with other people who have space available to rent. PG Hunt is your solution! 
+Whether you are a college student or a young professional, searching for an affordable PG(paying guest) can be challenging. It’s easy to get lost in the busy rental market, and difficult to communicate with other people who have space available to rent. PG Hunt is your solution! 
 
 <!-- ## Demo
 
